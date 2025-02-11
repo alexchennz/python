@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 def fetch_todo():
     """
     Fetch todo data from JSONPlaceholder API
@@ -25,6 +26,7 @@ def fetch_todo():
         print(f"Error fetching data: {e}")
         return None
 
+
 def display_todo(todo):
     """
     Display todo item in a formatted way
@@ -44,6 +46,7 @@ def display_todo(todo):
         print(json.dumps(todo, indent=2))
     else:
         print("No data to display")
+
 
 def fetch_all_posts():
     """
@@ -69,6 +72,7 @@ def fetch_all_posts():
         print(f"Error fetching posts: {e}")
         return None
 
+
 def display_posts(posts):
     """
     Display all posts in a formatted way
@@ -88,14 +92,15 @@ def display_posts(posts):
         print(f"Body: {post['body']}")
         print("-" * 50)
 
-def create_post(title, body, userId=1):
+
+def create_post(title, body, user_id=1):
     """
     Create a new post via JSONPlaceholder API
     
     Args:
         title (str): Title of the post
         body (str): Body content of the post
-        userId (int): User ID (default: 1)
+        user_id (int): User ID (default: 1)
     
     Returns:
         dict: Created post data from the API response
@@ -106,7 +111,7 @@ def create_post(title, body, userId=1):
     post_data = {
         "title": title,
         "body": body,
-        "userId": userId
+        "userId": user_id
     }
     
     try:
@@ -123,6 +128,7 @@ def create_post(title, body, userId=1):
     except requests.RequestException as e:
         print(f"Error creating post: {e}")
         return None
+
 
 def display_created_post(post):
     """
@@ -141,7 +147,8 @@ def display_created_post(post):
     else:
         print("Failed to create post")
 
-def update_post(post_id, title=None, body=None, userId=None):
+
+def update_post(post_id, title=None, body=None, user_id=None):
     """
     Update an existing post via JSONPlaceholder API
     
@@ -149,7 +156,7 @@ def update_post(post_id, title=None, body=None, userId=None):
         post_id (int): ID of the post to update
         title (str, optional): New title of the post
         body (str, optional): New body content of the post
-        userId (int, optional): New user ID
+        user_id (int, optional): New user ID
     
     Returns:
         dict: Updated post data from the API response
@@ -166,7 +173,7 @@ def update_post(post_id, title=None, body=None, userId=None):
         update_data = {
             "title": title if title is not None else existing_post['title'],
             "body": body if body is not None else existing_post['body'],
-            "userId": userId if userId is not None else existing_post['userId'],
+            "userId": user_id if user_id is not None else existing_post['userId'],
             "id": post_id
         }
         
@@ -181,6 +188,7 @@ def update_post(post_id, title=None, body=None, userId=None):
     except requests.RequestException as e:
         print(f"Error updating post: {e}")
         return None
+
 
 def display_updated_post(old_post, new_post):
     """
@@ -207,6 +215,7 @@ def display_updated_post(old_post, new_post):
         print(f"User ID:\n  - Old: {old_post['userId']}\n  + New: {new_post['userId']}")
         
     print("\nNote: In JSONPlaceholder API, updates are not persisted.")
+
 
 def delete_post(post_id):
     """
@@ -236,6 +245,7 @@ def delete_post(post_id):
         print(f"Error deleting post: {e}")
         return False, None
 
+
 def display_deleted_post(success, post):
     """
     Display the result of post deletion
@@ -254,6 +264,7 @@ def display_deleted_post(success, post):
     else:
         print("Failed to delete post")
 
+
 def main():
     choice = input("What would you like to do?\n1. Single Todo\n2. All Posts\n3. Create New Post\n4. Update Post\n5. Delete Post\nEnter choice (1/2/3/4/5): ")
     
@@ -269,10 +280,10 @@ def main():
         print("\n=== Create New Post ===")
         title = input("Enter post title: ")
         body = input("Enter post body: ")
-        userId = int(input("Enter user ID (default 1): ") or "1")
+        user_id = int(input("Enter user ID (default 1): ") or "1")
         
         print("\nCreating post...")
-        created_post = create_post(title, body, userId)
+        created_post = create_post(title, body, user_id)
         display_created_post(created_post)
     elif choice == "4":
         print("\n=== Update Post ===")
@@ -291,11 +302,11 @@ def main():
         print("\nEnter new values (press Enter to keep current value):")
         new_title = input("New title: ") or None
         new_body = input("New body: ") or None
-        new_userId = input("New user ID: ")
-        new_userId = int(new_userId) if new_userId else None
+        new_user_id = input("New user ID: ")
+        new_user_id = int(new_user_id) if new_user_id else None
         
         print("\nUpdating post...")
-        updated_post = update_post(post_id, new_title, new_body, new_userId)
+        updated_post = update_post(post_id, new_title, new_body, new_user_id)
         display_updated_post(old_post, updated_post)
     elif choice == "5":
         print("\n=== Delete Post ===")
@@ -307,5 +318,6 @@ def main():
     else:
         print("Invalid choice!")
 
+
 if __name__ == "__main__":
-    main() 
+    main()

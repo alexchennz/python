@@ -1,6 +1,7 @@
 import random
 import string
 
+
 def generate_password(length=12, use_letters=True, use_numbers=True, use_symbols=True):
     """
     Generate a random password based on specified criteria
@@ -36,6 +37,7 @@ def generate_password(length=12, use_letters=True, use_numbers=True, use_symbols
     password = ''.join(random.choice(char_pool) for _ in range(length))
     return password
 
+
 def main():
     try:
         # Example usage
@@ -62,5 +64,6 @@ def main():
     except KeyboardInterrupt:
         print("\nOperation cancelled by user")
 
+
 if __name__ == "__main__":
-    main() 
+    main()

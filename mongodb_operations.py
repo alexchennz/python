@@ -6,6 +6,30 @@ from datetime import datetime
 # Load environment variables
 load_dotenv()
 
+
+def display_documents(documents):
+    """
+    Display documents in a formatted way
+
+    Args:
+        documents (list): List of documents to display
+    """
+    if not documents:
+        print("No documents found")
+        return
+
+    for doc in documents:
+        print("\n" + "="*50)
+        for key, value in doc.items():
+            if key == '_id':
+                print(f"ID: {value}")
+            else:
+                # Format datetime objects
+                if isinstance(value, datetime):
+                    value = value.strftime("%Y-%m-%d %H:%M:%S")
+                print(f"{key}: {value}")
+
+
 class MongoDBClient:
     """Class to handle MongoDB operations"""
     
@@ -62,29 +86,7 @@ class MongoDBClient:
         except Exception as e:
             print(f"Error fetching filtered documents from {collection_name}: {e}")
             return []
-    
-    def display_documents(self, documents):
-        """
-        Display documents in a formatted way
-        
-        Args:
-            documents (list): List of documents to display
-        """
-        if not documents:
-            print("No documents found")
-            return
-            
-        for doc in documents:
-            print("\n" + "="*50)
-            for key, value in doc.items():
-                if key == '_id':
-                    print(f"ID: {value}")
-                else:
-                    # Format datetime objects
-                    if isinstance(value, datetime):
-                        value = value.strftime("%Y-%m-%d %H:%M:%S")
-                    print(f"{key}: {value}")
-    
+
     def close_connection(self):
         """Close the MongoDB connection"""
         try:
@@ -122,7 +124,7 @@ def main():
                 collection_index = int(input("\nEnter collection number: ")) - 1
                 if 0 <= collection_index < len(collections):
                     documents = mongo_client.fetch_all_documents(collections[collection_index])
-                    mongo_client.display_documents(documents)
+                    display_documents(documents)
                 else:
                     print("Invalid collection number")
                     
@@ -142,7 +144,7 @@ def main():
                             collections[collection_index],
                             filter_dict
                         )
-                        mongo_client.display_documents(documents)
+                        display_documents(documents)
                     except Exception as e:
                         print(f"Error parsing filter: {e}")
                 else:
@@ -161,4 +163,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
