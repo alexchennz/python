@@ -18,7 +18,7 @@ class MongoDBClient:
         
         try:
             self.client = MongoClient(self.connection_string)
-            self.db = self.client.get_database("test")  # Replace with your database name
+            self.db = self.client.get_database("nz-events")  # Replace with your database name
         except Exception as e:
             print(f"Error connecting to MongoDB: {e}")
             raise
